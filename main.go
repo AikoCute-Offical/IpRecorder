@@ -7,10 +7,21 @@ import (
 	"IpRecorder/data"
 	"IpRecorder/http"
 	"flag"
+	"fmt"
 	"log"
 )
 
 var path = flag.String("path", "./config.json", "config file path")
+
+var (
+	version  = "0.0.1"
+	codename = "IpRecorder"
+	intro    = "Backend For AikoR"
+)
+
+func showVersion() {
+	fmt.Printf("%s %s (%s) \n", codename, version, intro)
+}
 
 func main() {
 	flag.Parse()
