@@ -4,8 +4,7 @@ go 1.18
 
 require (
 	github.com/gin-gonic/gin v1.8.1
-	github.com/ip2location/ip2location-go/v9 v9.4.0
-	github.com/patrickmn/go-cache v2.1.0+incompatible
+	github.com/ip2location/ip2location-go/v9 v9.4.1
 	github.com/robfig/cron/v3 v3.0.1
 	gopkg.in/telebot.v3 v3.0.0
 )
