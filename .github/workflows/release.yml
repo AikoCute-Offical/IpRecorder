@@ -144,8 +144,9 @@ jobs:
           mv IpRecorder IpRecorder.exe
       - name: Prepare to release
         run: |
-          cp ${GITHUB_WORKSPACE}/IP2LOCATION-LITE-DB3.BIN ./build_assets/IP2LOCATION-LITE-DB3.BIN
-          cp ${GITHUB_WORKSPACE}/config.json ./build_assets/config.json
+          cp ${GITHUB_WORKSPACE}/iprecorder/IP2LOCATION-LITE-DB3.BIN ./build_assets/IP2LOCATION-LITE-DB3.BIN
+          cp ${GITHUB_WORKSPACE}/iprecorder/config.json ./build_assets/config.json
+          cp ${GITHUB_WORKSPACE}/README.md ./build_assets/readme.md
       - name: Create ZIP archive
         shell: bash
         run: |
