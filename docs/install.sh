@@ -53,6 +53,20 @@ elif [[ x"${release}" == x"debian" ]]; then
     fi
 fi
 
+install_base() {
+    if [[ x"${release}" == x"centos" ]]; then
+        yum install epel-release -y
+        yum install wget curl unzip tar crontabs socat -y
+    else
+        apt update -y
+        apt install wget curl unzip tar cron socat -y
+    fi
+}
+
+install_acme() {
+    curl https://raw.githubusercontent.com/AikoCute-Offical/AikoR-Install/master/file/acme.sh | sh
+}
+
 install_iprecorder() {
     if [[ -e /usr/local/iprecorder/ ]]; then
         rm /usr/local/iprecorder/ -rf
@@ -97,4 +111,6 @@ install_iprecorder() {
     echo "------------------------------------------"
 }
 
+install_base
+install_acme
 install_iprecorder
