@@ -133,13 +133,13 @@ install_iprecorder() {
         fi
         read -p "Input token (default: iprecorder): " Token
         [ -z "${Token}" ] && Token="iprecorder"
-        read -p "Add Username Telegram" MasterId
+        read -p "Add Username Telegram :" MasterId
         [ -z "${MasterId}" ] && MasterId="AikoCute"
-        read -p "Add Bot Token Telegram" BotToken
+        read -p "Add Bot Token Telegram :" BotToken
         [ -z "${BotToken}" ] && BotToken="AikoCute"
-        read -p "HistoryIpLimit (default: 3): " HistoryIpLimit
+        read -p "HistoryIpLimit (default: 3):" HistoryIpLimit
         [ -z "${HistoryIpLimit}" ] && HistoryIpLimit="3"
-        read -p "OnlineIpLimit (default: 3): " OnlineIpLimit
+        read -p "OnlineIpLimit (default: 3):" OnlineIpLimit
         [ -z "${OnlineIpLimit}" ] && OnlineIpLimit="3"
 
 cat >/etc/iprecorder/config.json <<EOF
