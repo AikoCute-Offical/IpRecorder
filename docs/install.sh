@@ -9,6 +9,7 @@ plain='\033[0m'
 
 cur_dir=$(pwd)
 
+
 # check root
 [[ $EUID -ne 0 ]] && echo -e "${red}Error：${plain} This script must be run as root user!\n" && exit 1
 
@@ -118,6 +119,46 @@ install_iprecorder() {
         cp IP2LOCATION-LITE-DB3.BIN /etc/iprecorder/
     fi
 
+    # get IP 
+    ip=$(curl -s https://api.ip.sb/ip)
+
+    echo -e "Do you want Install Config iprecorder now? [Y/n]"
+    read -p "(Default: y):" install_config
+    if [ "$install_config" == "y" ]; then
+        read -p "Please enter the port number of iprecorder (default: 8080): " port
+        [ -z "${port}" ] && port="8080"
+        if [[ ${port} -ge 1 ]] && [[ ${port} -le 65535 ]]; then
+        echo "iprecorder port: ${port}"
+        else
+        echo -e "${red}The port number is incorrect, please enter a number between 1 and 65535${plain}"
+        exit 1
+        fi
+        read -p "Input token (default: iprecorder): " Token
+        [ -z "${Token}" ] && Token="iprecorder"
+        read -p "Add Username Telegram" MasterId
+        [ -z "${MasterId}" ] && MasterId="AikoCute"
+        read -p "Add Bot Token Telegram" BotToken
+        [ -z "${BotToken}" ] && BotToken="AikoCute"
+        read -p "HistoryIpLimit (default: 3): " HistoryIpLimit
+        [ -z "${HistoryIpLimit}" ] && HistoryIpLimit="3"
+        read -p "OnlineIpLimit (default: 3): " OnlineIpLimit
+        [ -z "${OnlineIpLimit}" ] && OnlineIpLimit="3"
+
+cat >/etc/iprecorder/config.json <<EOF
+{
+    "Addr": "$ip:$port",
+    "Token": "$Token",
+    "IpDb": "./IP2LOCATION-LITE-DB3.BIN",
+    "MasterId": $MasterId,
+    "BotToken": "$BotToken",
+    "HistoryIpLimit": $HistoryIpLimit,
+    "OnlineIpLimit": $OnlineIpLimit
+}
+EOF
+
+    echo -e "${green}iprecorder config.json write success${plain}"
+    fi
+    
     
     echo -e ""
     echo " How to use the iprecorder . management script " 
@@ -128,3 +169,4 @@ install_iprecorder() {
 }
 
 install_iprecorder
+/etc/iprecorder/IpRecorder -path ./config.json
