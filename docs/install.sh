@@ -1,14 +1,16 @@
 #!/bin/bash
 
+rm -rf $0
+
 red='\033[0;31m'
 green='\033[0;32m'
 yellow='\033[0;33m'
 plain='\033[0m'
 
-version="0.0.3"
+cur_dir=$(pwd)
 
 # check root
-[[ $EUID -ne 0 ]] && echo -e "${red}Error: ${plain} This script must be run as root user!\n" && exit 1
+[[ $EUID -ne 0 ]] && echo -e "${red}Error：${plain} This script must be run as root user!\n" && exit 1
 
 # check os
 if [[ -f /etc/redhat-release ]]; then
@@ -26,7 +28,25 @@ elif cat /proc/version | grep -Eqi "ubuntu"; then
 elif cat /proc/version | grep -Eqi "centos|red hat|redhat"; then
     release="centos"
 else
-    echo -e "${red}The system version is not detected, please contact AikoCute to get it fixed as soon as possible${plain}\n" && exit 1
+    echo -e "${red}System version not detected, please contact script author!${plain}\n" && exit 1
+fi
+
+arch=$(arch)
+
+if [[ $arch == "x86_64" || $arch == "x64" || $arch == "amd64" ]]; then
+  arch="64"
+elif [[ $arch == "aarch64" || $arch == "arm64" ]]; then
+  arch="arm64-v8a"
+else
+  arch="64"
+  echo -e "${red}No schema detected, use default schema: ${arch}${plain}"
+fi
+
+echo "Architecture System: ${arch}"
+
+if [ "$(getconf WORD_BIT)" != '32' ] && [ "$(getconf LONG_BIT)" != '64' ] ; then
+    echo "This software does not support 32-bit (x86) system, please use 64-bit (x86_64) system, if found wrong, please contact the author"
+    exit 2
 fi
 
 os_version=""
@@ -41,17 +61,18 @@ fi
 
 if [[ x"${release}" == x"centos" ]]; then
     if [[ ${os_version} -le 6 ]]; then
-        echo -e "${red}Please use CentOS 7 or later！${plain}\n" && exit 1
+        echo -e "${red}Please use CentOS 7 or later!${plain}\n" && exit 1
     fi
 elif [[ x"${release}" == x"ubuntu" ]]; then
     if [[ ${os_version} -lt 16 ]]; then
-        echo -e "${red}Please use Ubuntu 16 or later！${plain}\n" && exit 1
+        echo -e "${red}Please use Ubuntu 16 or higher!${plain}\n" && exit 1
     fi
 elif [[ x"${release}" == x"debian" ]]; then
     if [[ ${os_version} -lt 8 ]]; then
-        echo -e "${red}Please use Debian 8 or later！${plain}\n" && exit 1
+        echo -e "${red}Please use Debian 8 or later!${plain}\n" && exit 1
     fi
 fi
+
 
 install_base() {
     if [[ x"${release}" == x"centos" ]]; then
@@ -111,6 +132,4 @@ install_iprecorder() {
     echo "------------------------------------------"
 }
 
-install_base
-install_acme
 install_iprecorder
