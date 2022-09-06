@@ -44,7 +44,7 @@ func main() {
 	if err != nil {
 		log.Fatalln("Init bot service error: ", err)
 	}
-	cronObj, err := cron.New(dataObj, botObj, config.HistoryIpLimit)
+	cronObj, err := cron.New(dataObj, botObj, config)
 	if err != nil {
 		log.Fatalln("Init cron error: ", err)
 	}

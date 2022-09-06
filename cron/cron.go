@@ -2,6 +2,7 @@ package cron
 
 import (
 	"IpRecorder/bot"
+	"IpRecorder/conf"
 	"IpRecorder/data"
 	"fmt"
 	"strconv"
@@ -18,13 +19,13 @@ type Cron struct {
 	ip           *ip2location.DB
 }
 
-func New(data *data.Data, bot *bot.Bot, limit int) (*Cron, error) {
-	ip, err := ip2location.OpenDB("./ipdata.bin")
+func New(data *data.Data, bot *bot.Bot, config *conf.Conf) (*Cron, error) {
+	ip, err := ip2location.OpenDB(config.IpDb)
 	if err != nil {
 		return nil, err
 	}
 	return &Cron{
-		historyLimit: limit,
+		historyLimit: config.HistoryIpLimit,
 		ip:           ip,
 		data:         data,
 		bot:          bot,
@@ -44,16 +45,16 @@ func (p *Cron) checkUserIpList() {
 				ipAndRegions[location.City] = ip
 			}
 			if len(ipAndRegions) > p.historyLimit {
-				msg := "List IP: \n"
+				msg := "IP列表: \n"
 				for region := range ipAndRegions {
 					msg += "\n" + ipAndRegions[region] + " | " + region
 				}
-				err := p.bot.PushMsgToMaster("The number of historical connection IP exceeds the limit notification\n\n users: " + strconv.Itoa(user.(int)) + msg)
+				err := p.bot.PushMsgToMaster("历史连接IP数超出限制通知\n\n用户: " + strconv.Itoa(user.(int)) + msg)
 				if err != nil {
 					fmt.Println("Push message error: ", err)
 				}
 			}
-			err := p.bot.PushMsgToMaster("The number of historical connection IP exceeds the limit notification\n\n users: " + strconv.Itoa(user.(int)) +
+			err := p.bot.PushMsgToMaster("历史连接IP数超出限制通知\n\n用户: " + strconv.Itoa(user.(int)) +
 				"\nIP: " + strings.Join(ips, " | "))
 			if err != nil {
 				fmt.Println("Push message error: ", err)
