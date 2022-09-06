@@ -3,7 +3,7 @@ Bộ ghi bên ngoài cho AikoR để đồng bộ hóa và ghi lại các thiế
 ## Mô tả tệp cấu hình
 - `Addr` Address Web, ví dụ:`127.0.0.1:1231`
 - `Token` Mã thông báo xác thực khi giao tiếp với AikoR
-- `IpDb` Đường dẫn Database IP
+- `IpDb` Đường dẫn Database IP (IP2LOCATION-LITE-DB3.BIN This file)
 - `MasterId` ID người dùng Telegram, được sử dụng để đẩy thông báo quá tải Ip kết nối lịch sử
 - `BotToken` Telegram BotToken
 - `HistoryIpLimit` Số lượng IP kết nối mỗi ngày có giới hạn và cùng một thành phố được tính là một IP. Nếu vượt quá giới hạn, thông báo tin nhắn tg sẽ được đẩy lên. 0 để vô hiệu hóa
