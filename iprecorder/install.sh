@@ -109,18 +109,16 @@ install_iprecorder() {
     unzip iprecorder-linux.zip
     rm iprecorder-linux.zip -f
     mkdir /etc/iprecorder/ -p
+    cp IP2LOCATION-LITE-DB3.BIN /etc/iprecorder/
+    cp IpRecorder /etc/iprecorder/
     echo -e "${green}iprecorder ${last_version}${plain} The installation is complete, it is already set to start automatically"
 
     if [[ ! -f /etc/iprecorder/config.json ]]; then
         cp config.json /etc/iprecorder/
     fi
 
-    if [[ ! -f /etc/iprecorder/IP2LOCATION-LITE-DB3.BIN ]]; then
-        cp IP2LOCATION-LITE-DB3.BIN /etc/iprecorder/
-    fi
-
     # get IP 
-    ip=$(curl -s https://api.ip.sb/ip)
+    ip=`curl -s https://ipinfo.io/ip`
 
     echo -e "Do you want Install Config iprecorder now? [Y/n]"
     read -p "(Default: y):" install_config
