@@ -106,7 +106,6 @@ install_iprecorder() {
         fi
     fi
 
-    apt install unzip -y
     unzip iprecorder-linux.zip
     rm iprecorder-linux.zip -f
     echo -e "${green}iprecorder ${last_version}${plain} The installation is complete, it is already set to start automatically"
