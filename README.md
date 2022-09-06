@@ -1,3 +1,10 @@
+# Multiple languages supported AikoR-IpRecord
+1: Description by English [English](/README.md) 
+
+2: Description by Chinese [Chinese](/docs/readme-cn.md)
+
+3: Description by Vietnamese [Vietnamese](/docs/readme-vi.md)
+
 # AikoR-IpRecord
 External logger for AikoR to synchronize and record the online devices (IPs) of each node
 ## Configuration file description
