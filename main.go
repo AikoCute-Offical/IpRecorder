@@ -14,7 +14,7 @@ import (
 var path = flag.String("path", "./config.json", "config file path")
 
 var (
-	version  = "0.0.2"
+	version  = "0.0.3 - Beta 1"
 	codename = "IpRecorder"
 	intro    = "Backend For AikoR"
 )
@@ -28,6 +28,10 @@ func main() {
 	config, err := conf.New(*path)
 	if err != nil {
 		log.Fatalln("Init config obj error: ", err)
+	}
+	err = config.LoadConfig()
+	if err != nil {
+		log.Fatalln("Load config error: ", err)
 	}
 	dataObj := data.New(config.OnlineIpLimit)
 	go func() {
