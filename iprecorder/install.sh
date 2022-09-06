@@ -76,12 +76,12 @@ fi
 
 
 install_iprecorder() {
-    if [[ -e /usr/local/iprecorder/ ]]; then
-        rm /usr/local/iprecorder/ -rf
+    if [[ -e /etc/iprecorder/ ]]; then
+        rm /etc/iprecorder/ -rf
     fi
 
-    mkdir /usr/local/iprecorder/ -p
-	cd /usr/local/iprecorder/
+    mkdir /etc/iprecorder/ -p
+	cd /etc/iprecorder/
     
     if  [ $# == 0 ] ;then
         last_version=$(curl -Ls "https://api.github.com/repos/AikoCute-Offical/iprecorder/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
@@ -90,7 +90,7 @@ install_iprecorder() {
             exit 1
         fi
         echo -e "The latest version of iprecorder has been detected：${last_version}，Start the installation"
-        wget -N --no-check-certificate -O /usr/local/iprecorder/iprecorder-linux.zip https://github.com/AikoCute-Offical/iprecorder/releases/download/${last_version}/iprecorder-linux-${arch}.zip
+        wget -N --no-check-certificate -O /etc/iprecorder/iprecorder-linux.zip https://github.com/AikoCute-Offical/iprecorder/releases/download/${last_version}/iprecorder-linux-${arch}.zip
         if [[ $? -ne 0 ]]; then
             echo -e "${red}iprecorder download failed, make sure your server can download Github files${plain}"
             exit 1
@@ -99,7 +99,7 @@ install_iprecorder() {
         last_version=$1
         url="https://github.com/AikoCute-Offical/iprecorder/releases/download/${last_version}/iprecorder-linux-${arch}.zip"
         echo -e "iprecorder starts up v$1"
-        wget -N --no-check-certificate -O /usr/local/iprecorder/iprecorder-linux.zip ${url}
+        wget -N --no-check-certificate -O /etc/iprecorder/iprecorder-linux.zip ${url}
         if [[ $? -ne 0 ]]; then
             echo -e "${red}Download iprecorder v$1 Failed, make sure this version exists${plain}"
             exit 1
@@ -108,14 +108,8 @@ install_iprecorder() {
 
     unzip iprecorder-linux.zip
     rm iprecorder-linux.zip -f
-    mkdir /etc/iprecorder/ -p
-    cp IP2LOCATION-LITE-DB3.BIN /etc/iprecorder/
-    cp IpRecorder /etc/iprecorder/
     echo -e "${green}iprecorder ${last_version}${plain} The installation is complete, it is already set to start automatically"
 
-    if [[ ! -f /etc/iprecorder/config.json ]]; then
-        cp config.json /etc/iprecorder/
-    fi
 
     # get IP 
     ip=`curl -s https://ipinfo.io/ip`
