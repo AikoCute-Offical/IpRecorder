@@ -74,20 +74,6 @@ elif [[ x"${release}" == x"debian" ]]; then
 fi
 
 
-install_base() {
-    if [[ x"${release}" == x"centos" ]]; then
-        yum install epel-release -y
-        yum install wget curl unzip tar crontabs socat -y
-    else
-        apt update -y
-        apt install wget curl unzip tar cron socat -y
-    fi
-}
-
-install_acme() {
-    curl https://raw.githubusercontent.com/AikoCute-Offical/AikoR-Install/master/file/acme.sh | sh
-}
-
 install_iprecorder() {
     if [[ -e /usr/local/iprecorder/ ]]; then
         rm /usr/local/iprecorder/ -rf
@@ -124,6 +110,15 @@ install_iprecorder() {
     mkdir /etc/iprecorder/ -p
     echo -e "${green}iprecorder ${last_version}${plain} The installation is complete, it is already set to start automatically"
 
+    if [[ ! -f /etc/iprecorder/config.json ]]; then
+        cp config.json /etc/iprecorder/
+    fi
+
+    if [[ ! -f /etc/iprecorder/IP2LOCATION-LITE-DB3.BIN ]]; then
+        cp IP2LOCATION-LITE-DB3.BIN /etc/iprecorder/
+    fi
+
+    
     echo -e ""
     echo " How to use the iprecorder . management script " 
     echo "------------------------------------------"
