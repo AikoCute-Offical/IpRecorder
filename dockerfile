@@ -14,4 +14,4 @@ RUN apk --update --no-cache add tzdata ca-certificates && \
     mkdir /etc/IpRecorder/
 COPY --from=builder /app/IpRecorder /usr/local/bin
 
-ENTRYPOINT [ "IpRecorder", "--config", "/etc/IpRecorder/config.json" ]
+ENTRYPOINT [ "IpRecorder", "-path", "/etc/IpRecorder/config.json" ]
