@@ -45,16 +45,16 @@ func (p *Cron) checkUserIpList() {
 				ipAndRegions[location.City] = ip
 			}
 			if len(ipAndRegions) > p.historyLimit {
-				msg := "IP列表: \n"
+				msg := "Danh sách IP: \n"
 				for region := range ipAndRegions {
 					msg += "\n" + ipAndRegions[region] + " | " + region
 				}
-				err := p.bot.PushMsgToMaster("历史连接IP数超出限制通知\n\n用户: " + strconv.Itoa(user.(int)) + msg)
+				err := p.bot.PushMsgToMaster("Thông báo Số IP Vượt quá Giới hạn\n\n người dùng: " + strconv.Itoa(user.(int)) + msg)
 				if err != nil {
 					fmt.Println("Push message error: ", err)
 				}
 			}
-			err := p.bot.PushMsgToMaster("历史连接IP数超出限制通知\n\n用户: " + strconv.Itoa(user.(int)) +
+			err := p.bot.PushMsgToMaster("Số lượng IP kết nối lịch sử vượt quá thông báo giới hạn \n\n Người dùng:" + strconv.Itoa(user.(int)) +
 				"\nIP: " + strings.Join(ips, " | "))
 			if err != nil {
 				fmt.Println("Push message error: ", err)
