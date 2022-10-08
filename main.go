@@ -14,7 +14,7 @@ import (
 var path = flag.String("path", "./config.json", "config file path")
 
 var (
-	version  = "0.0.4"
+	version  = "0.0.5"
 	codename = "IpRecorder"
 	intro    = "Backend For AikoR"
 )
